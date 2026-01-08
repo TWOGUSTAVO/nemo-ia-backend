@@ -8,13 +8,13 @@ dotenv.config();
 
 const app = express();
 
-// Configuração CORS para aceitar seu frontend
+// Configuração CORS para aceitar seu frontend - ATUALIZADO COM SEUS DOMÍNIOS
 app.use(cors({
   origin: [
-    'https://innovations.github.io',
-    'https://your-username.github.io',
-    'http://localhost:3000',
-    'http://127.0.0.1:5500'
+    'https://innovations.github.io',  // Seu frontend
+    'http://localhost:5500',          // Live Server
+    'http://127.0.0.1:5500',         // Localhost
+    'http://localhost:3000'          // React dev
   ],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
   res.json({
     status: "online",
     service: "Nemo AI Backend",
-    version: "2.0.0",
+    version: "2.1.0",  // Atualizado
     endpoints: {
       health: "/health",
       chat: "/api/chat",
@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
       status: "/api/status",
       models: "/api/models"
     },
-    documentation: "https://nemo-ia-backend.onrender.com/docs"
+    documentation: "https://nemo-ia-backend.onrender.com"
   });
 });
 
@@ -162,14 +162,14 @@ app.post("/api/quick", async (req, res) => {
 
 app.get("/api/status", async (req, res) => {
   try {
-    // Testar conexão com Hugging Face
+    // Testar conexão com Hugging Face (ATUALIZADO para nova URL)
     const hfStatus = await testHFConnection();
     
     res.json({
       success: true,
       status: "online",
       service: "Nemo AI Backend",
-      version: "2.0.0",
+      version: "2.1.0",  // Atualizado
       models: {
         mistral: hfStatus.mistral ? "available" : "unavailable",
         bloom: hfStatus.bloom ? "available" : "unavailable",
@@ -235,8 +235,9 @@ async function callMistral(message, history = [], options = {}) {
   try {
     const formattedPrompt = formatMistralPrompt(message, history);
     
+    // URL ATUALIZADA para nova API da Hugging Face
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",
+      "https://router.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",  // ← MUDOU AQUI!
       {
         method: "POST",
         headers: {
@@ -302,8 +303,9 @@ async function callMistral(message, history = [], options = {}) {
 
 async function callBloom(message) {
   try {
+    // URL ATUALIZADA para nova API da Hugging Face
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/bigscience/bloomz",
+      "https://router.huggingface.co/models/bigscience/bloomz",  // ← MUDOU AQUI!
       {
         method: "POST",
         headers: {
@@ -484,9 +486,9 @@ function getFriendlyFallback(originalMessage) {
 
 async function testHFConnection() {
   try {
-    // Testar Mistral
+    // Testar Mistral - URL ATUALIZADA
     const mistralTest = await fetch(
-      "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",
+      "https://router.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",  // ← MUDOU AQUI!
       {
         method: "POST",
         headers: {
@@ -500,9 +502,9 @@ async function testHFConnection() {
       }
     ).then(r => r.ok).catch(() => false);
 
-    // Testar BLOOM
+    // Testar BLOOM - URL ATUALIZADA
     const bloomTest = await fetch(
-      "https://api-inference.huggingface.co/models/bigscience/bloomz",
+      "https://router.huggingface.co/models/bigscience/bloomz",  // ← MUDOU AQUI!
       {
         method: "POST",
         headers: {
