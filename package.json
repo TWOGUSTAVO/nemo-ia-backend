@@ -1,14 +1,24 @@
 {
-  "name": "ia-backend",
-  "version": "1.0.0",
-  "type": "module",
+  "name": "memo-its-backend",
+  "version": "2.0.0",
+  "description": "Backend IA para Nemo System",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "echo \"No tests yet\" && exit 0"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "node-fetch": "^3.3.2",
-    "cors": "^2.8.5"
-  }
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["ai", "chatbot", "nemo", "backend", "huggingface"],
+  "author": "TWOGUSTAVO",
+  "license": "MIT"
 }
